@@ -1,36 +1,89 @@
 const fs = require('fs').promises
 const path = require('path')
 
-const link = './Files/hw'
 
-fs.readdir(link).then(directories => {
-    for (const directory of directories) {
+const reader = async (folderPath) => {
+    const files = await fs.readdir(folderPath);
 
-        const directoryIf = fs.stat(path.join(link, directory)).then(dir => {
-            dir.isDirectory()
-        })
+    for (const file of files) {
+        const pathToFile = path.join(folderPath, file);
+        const stat = await fs.stat(pathToFile);
 
-        if (directoryIf) {
-            fs.readdir(path.join(link, directory)).then(dirs => {
-                for (const dir of dirs) {
-                    console.log(dir)
+        if (stat.isFile()) {
+            await fs.rename(pathToFile, path.join(__dirname, file));
+        }
 
-                    // const dirIf = fs.stat(path.join(link, directory, dir)).then(filesCheck => {
-                    //     filesCheck.isDirectory()
-                    // })
-                    //
-                    // if (dirIf) {
-                    //     fs.readdir(path.join(link, directory, dir)).then( async files => {
-                    //         for (const file of files) {
-                    //             await fs.rename(`${path.join(link, directory, dir, file)}`,
-                    //                 `${path.join(link, file)}`)
-                    //         }
-                    //     }).catch(() => {})
-                    // }
-                }
-            }).catch(() => {})
-        } else {
-            return (console.log('none'))
+        if (stat.isDirectory()) {
+            await reader(pathToFile);
         }
     }
-}).catch(() => {})
+}
+
+reader(__dirname);
+
+console.log(__dirname)
+// const reader = () => {
+//     fs.readdir(__dirname).then (async directories => {
+//         for (const directory of directories) {
+//
+//
+//
+//             const directoryIf = fs.stat(path.join(__dirname, directory)).then(directory => {
+//                 directory.isDirectory()
+//             })
+//
+//
+//
+//             if (directoryIf) {
+//                 fs.readdir(path.join(__dirname, directory)).then(async dirs => {
+//                     for (const dir of dirs) {
+//                         await fs.rename(`${path.join(__dirname, directory, dir)}`,
+//                             `${path.join(__dirname, dir)}`)
+//
+//                         const dirIf = fs.stat(path.join(__dirname, directory, dir)).then(filesCheck => {
+//                             filesCheck.isDirectory()
+//                         })
+//
+//                         if (dirIf) {
+//                             fs.readdir(path.join(__dirname, directory, dir)).then(async files => {
+//                                 for (const file of files) {
+//
+//                                     await fs.rename(`${path.join(__dirname, directory, dir, file)}`,
+//                                         `${path.join(__dirname, file)}`)
+//
+//                                     await fs.rename(`${path.join(__dirname, directory, dir)}`,
+//                                         `${path.join(__dirname, dir)}`)
+//
+//                                     const dirFile = fs.stat(path.join(__dirname, directory)).then(filesCheck => {
+//                                         filesCheck.isDirectory()
+//                                     })
+//
+//
+//                                     if (dirFile) {
+//                                         await fs.unlink(path.join(__dirname, directory))
+//                                     } else {
+//                                         console.log('done')
+//                                     }
+//
+//                                 }
+//                             }).catch(() => {
+//                             })
+//                         } else {
+//                             console.log('done')
+//                         }
+//                     }
+//                 }).catch(() => {
+//                 })
+//             } else {
+//                 return (console.log('done'))
+//             }
+//         }
+//     }).catch(() => {
+//     })
+//
+// }
+//
+// reader()
+//
+//
+//

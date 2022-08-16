@@ -1,5 +1,4 @@
-const fs = require('fs').promises
-
+// const fs = require('fs').promises
 
 
 // fs.mkdir('./Files').catch((e) => {
@@ -16,13 +15,13 @@ const fs = require('fs').promises
 //     console.log(data)
 // })
 
-fs.readdir('./Files').then(files => {
-    for (const file of files) {
-        fs.stat(`./Files/${file}`).then(statInfo => {
-            console.log(statInfo)
-        })
-    }
-})
+// fs.readdir('./Files').then(files => {
+//     for (const file of files) {
+//         fs.stat(`./Files/${file}`).then(statInfo => {
+//             console.log(statInfo)
+//         })
+//     }
+// })
 
 // fs.unlink('./file.txt').then(value => {
 //     console.log(value)
