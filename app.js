@@ -1,20 +1,15 @@
 const express = require('express')
-const {response} = require("express");
+
+const userRouter = require("./routes/user.route");
 
 const app = express();
+app.use(express.json())
 
-app.get('/users',(req, res) => {
+app.use('/users', userRouter);
 
-    res.json([
-        {
-            name: 'Leanne Graham',
-            age: 23},
-        {
-            name: 'Ervin Howell',
-            age: 25
-        }
-    ])
-});
 app.listen(5000, () => {
     console.log('5000')
 })
+
+
+
