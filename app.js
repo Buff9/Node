@@ -1,6 +1,7 @@
 const express = require('express')
 
 const userRouter = require("./routes/user.route");
+const middleware = require("../middlewares/user.middleware");
 
 const app = express();
 app.use(express.json())

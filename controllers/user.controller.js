@@ -3,6 +3,9 @@ const users = require("../dataBase/users.json");
 const fileService = require("../services/file.service")
 
 
+
+
+
 module.exports = {
     getUsers: async (req, res) => {
         res.json(users)
@@ -11,17 +14,8 @@ module.exports = {
     getUser: async (req, res) => {
         const {userId} = req.params
 
-        if (Number.isNaN(+userId) || +userId < 0 ){
-            res.status(400).json('wrong user id')
-            return;
-        }
-        const user = (users[userId])
-        if (!user){
-            res.status(404).json('users not found')
-            return;
-        }
 
-        res.json(user)
+        const user = (users[userId])
 
     },
 
